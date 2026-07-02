@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: cms-prototype
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: singapore          # closest to India; change to frankfurt / ohio as needed
+    plan: free
+    healthCheckPath: /login
+    autoDeploy: true
