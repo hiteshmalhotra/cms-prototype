@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Material Request — Store View — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('store-mr')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/store">Store</a></li>
+    <li class="breadcrumb-item"><a href="/store/material-requests">Canteen Requests</a></li>
+    <li class="breadcrumb-item active">MR-—</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1><i class="bi bi-box-arrow-in-down-right me-2"></i>Material Request — MR-—</h1>
+      <div class="page-subtitle">Raised by Canteen — Store fulfilment view</div>
+    </div>
+    <div class="page-header-actions">
+      <a href="/store/material-requests" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back</a>
+      <!-- Approve -->
+      <form action="/store/material-requests/1/approve" method="post" class="d-inline">
+        <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-clipboard-check me-1"></i>Approve</button>
+      </form>
+      <!-- Reject -->
+      <form action="/store/material-requests/1/reject" method="post" class="d-inline">
+        <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm="Reject this request? Canteen will be notified."><i class="bi bi-x-circle me-1"></i>Reject</button>
+      </form>
+      <!-- Pack -->
+      <form action="/store/material-requests/1/pack" method="post" class="d-inline">
+        <button type="submit" class="btn btn-outline-primary btn-sm"><i class="bi bi-box-seam me-1"></i>Start Packing</button>
+      </form>
+      <!-- Dispatch -->
+      <form action="/store/material-requests/1/dispatch" method="post" class="d-inline">
+        <button type="submit" class="btn btn-cms-primary btn-sm"><i class="bi bi-truck me-1"></i>Dispatch</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Status stepper (same as canteen view) -->
+  <div class="cms-card mb-3 p-3">
+    <div class="d-flex align-items-center justify-content-between" style="overflow-x:auto;">
+      <div class="workflow-step completed"><div class="step-circle"><i class="bi bi-pencil-square"></i></div><div class="step-label">DRAFT</div></div>
+      <div class="step-line completed"></div>
+      <div class="workflow-step active"><div class="step-circle"><i class="bi bi-send"></i></div><div class="step-label">SUBMITTED</div></div>
+      <div class="step-line"></div>
+      <div class="workflow-step"><div class="step-circle"><i class="bi bi-clipboard-check"></i></div><div class="step-label">APPROVED</div></div>
+      <div class="step-line"></div>
+      <div class="workflow-step"><div class="step-circle"><i class="bi bi-box-seam"></i></div><div class="step-label">PACKING</div></div>
+      <div class="step-line"></div>
+      <div class="workflow-step"><div class="step-circle"><i class="bi bi-truck"></i></div><div class="step-label">IN TRANSIT</div></div>
+      <div class="step-line"></div>
+      <div class="workflow-step"><div class="step-circle"><i class="bi bi-box-arrow-in-down"></i></div><div class="step-label">RECEIVED</div></div>
+      <div class="step-line"></div>
+      <div class="workflow-step"><div class="step-circle"><i class="bi bi-check2-all"></i></div><div class="step-label">VERIFIED</div></div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-8">
+      <!-- Request header -->
+      <div class="cms-card mb-3">
+        <div class="card-header-cms"><h5><i class="bi bi-info-circle me-2"></i>Request Details</h5></div>
+        <div class="card-body-cms">
+          <div class="row g-3">
+            <div class="col-sm-4"><div class="detail-label">Request #</div><div class="detail-value">MR-—</div></div>
+            <div class="col-sm-4"><div class="detail-label">Status</div><div class="detail-value"><span class="cms-badge badge-sent">SUBMITTED</span></div></div>
+            <div class="col-sm-4"><div class="detail-label">Priority</div><div class="detail-value"><span class="cms-badge badge-pending">NORMAL</span></div></div>
+            <div class="col-sm-4"><div class="detail-label">Canteen Location</div><div class="detail-value">—</div></div>
+            <div class="col-sm-4"><div class="detail-label">Requested By</div><div class="detail-value">—</div></div>
+            <div class="col-sm-4"><div class="detail-label">Required By</div><div class="detail-value text-danger fw-600">—</div></div>
+            <div class="col-12"><div class="detail-label">Purpose</div><div class="detail-value">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Items with stock check -->
+      <div class="cms-card mb-3">
+        <div class="card-header-cms"><h5><i class="bi bi-list-ul me-2"></i>Requested Items &amp; Stock Availability</h5></div>
+        <div class="cms-table-wrapper">
+          <table class="cms-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Unit</th>
+                <th>Qty Requested</th>
+                <th>Store Stock</th>
+                <th>Availability</th>
+                <th>Qty to Dispatch</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td><span class="cms-badge badge-active">Available</span></td>
+                <td><input type="number" class="form-control form-control-sm" placeholder="—" min="0" step="0.001"/></td>
+                <td><input type="text" class="form-control form-control-sm" placeholder="Optional"/></td>
+              </tr>
+              <tr><td colspan="8" class="text-center text-muted py-3">No items</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Dispatch form -->
+      <div class="cms-card">
+        <div class="card-header-cms" style="background:#E3F2FD;">
+          <h5><i class="bi bi-truck me-2"></i>Dispatch Details</h5>
+        </div>
+        <div class="card-body-cms">
+          <form action="/store/material-requests/1/dispatch" method="post">
+            <div class="row g-3">
+              <div class="col-sm-4">
+                <label class="form-label">Challan Number</label>
+                <input type="text" name="challanNo" class="form-control" placeholder="Auto-generated"/>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label">Dispatch Date</label>
+                <input type="date" name="dispatchDate" class="form-control"/>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label">Vehicle Number</label>
+                <input type="text" name="vehicleNo" class="form-control" placeholder="MH 01 AB 1234"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label">Dispatched By</label>
+                <input type="text" name="dispatchedBy" class="form-control" placeholder="Store staff name"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label">Expected Delivery</label>
+                <input type="datetime-local" name="expectedDelivery" class="form-control"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Dispatch Notes</label>
+                <textarea name="dispatchNotes" class="form-control" rows="2" placeholder="Any notes for Canteen on receiving..."></textarea>
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <button type="submit" class="btn btn-cms-primary"><i class="bi bi-truck me-1"></i>Confirm Dispatch</button>
+              <a href="/store/challans/create" class="btn btn-outline-secondary"><i class="bi bi-receipt me-1"></i>Create Challan from this</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right sidebar -->
+    <div class="col-md-4">
+      <div class="cms-card mb-3">
+        <div class="card-header-cms"><h5><i class="bi bi-clock-history me-2"></i>Status Timeline</h5></div>
+        <div class="card-body-cms">
+          <div class="cms-timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">Request Submitted by Canteen<div class="timeline-meta"><i class="bi bi-clock me-1"></i>—</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cms-card">
+        <div class="card-header-cms"><h5><i class="bi bi-lightbulb me-2"></i>Store Checklist</h5></div>
+        <div class="card-body-cms">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="chk1"/>
+            <label class="form-check-label fs-sm" for="chk1">Verify all items against current stock</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="chk2"/>
+            <label class="form-check-label fs-sm" for="chk2">Approve / partially approve request</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="chk3"/>
+            <label class="form-check-label fs-sm" for="chk3">Pack items and update quantities</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="chk4"/>
+            <label class="form-check-label fs-sm" for="chk4">Generate dispatch challan</label>
+          </div>
+          <div class="form-check mb-0">
+            <input class="form-check-input" type="checkbox" id="chk5"/>
+            <label class="form-check-label fs-sm" for="chk5">Mark as Dispatched → Notify Canteen</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/store">Store</a> &nbsp;|&nbsp; <a href="/canteen/material-requests">Canteen View</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

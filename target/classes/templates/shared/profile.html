@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>My Profile — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body>
+<div class="cms-shell">
+  <aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('profile')}"></aside>
+  <div class="cms-main">
+    <header class="cms-topbar">
+      <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+      <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">My Profile</li>
+      </ol></nav>
+      <div class="topbar-actions">
+        <button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button>
+        <div class="dropdown"><div class="topbar-user" data-bs-toggle="dropdown">
+          <div class="t-avatar">A</div><div><div class="t-name">Admin User</div><div class="t-role">Administrator</div></div>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="font-size:0.855rem;">
+          <li><a class="dropdown-item" href="/profile"><i class="bi bi-person me-2"></i>My Profile</a></li>
+          <li><a class="dropdown-item" href="/change-password"><i class="bi bi-key me-2"></i>Change Password</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+        </ul></div>
+      </div>
+    </header>
+    <main class="cms-content">
+      <div class="page-header">
+        <div class="page-header-left"><h1><i class="bi bi-person-circle me-2"></i>My Profile</h1><div class="page-subtitle">View and manage your account details</div></div>
+        <div class="page-header-actions"><button class="btn btn-cms-primary btn-sm"><i class="bi bi-pencil me-1"></i>Edit Profile</button></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="cms-card text-center p-4">
+            <div style="width:90px;height:90px;background:var(--cms-primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2rem;color:white;">A</div>
+            <h5 class="fw-600 mb-1">Admin User</h5>
+            <div class="fs-sm text-muted mb-2">admin@cms.org</div>
+            <span class="cms-badge badge-active">Active</span>
+            <hr/>
+            <div class="d-grid gap-2">
+              <a href="/change-password" class="btn btn-outline-primary btn-sm"><i class="bi bi-key me-1"></i>Change Password</a>
+              <a href="/logout" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="cms-card">
+            <div class="card-header-cms"><h5><i class="bi bi-info-circle me-2"></i>Account Information</h5></div>
+            <div class="card-body-cms">
+              <div class="row g-3">
+                <div class="col-sm-6"><div class="detail-label">First Name</div><div class="detail-value">Admin</div></div>
+                <div class="col-sm-6"><div class="detail-label">Last Name</div><div class="detail-value">User</div></div>
+                <div class="col-sm-6"><div class="detail-label">Email Address</div><div class="detail-value">admin@cms.org</div></div>
+                <div class="col-sm-6"><div class="detail-label">Role</div><div class="detail-value"><span class="cms-badge badge-sent">ROLE_ADMIN</span></div></div>
+                <div class="col-sm-6"><div class="detail-label">Account Status</div><div class="detail-value"><span class="cms-badge badge-active">Active</span></div></div>
+                <div class="col-sm-6"><div class="detail-label">Last Login</div><div class="detail-value">—</div></div>
+                <div class="col-sm-6"><div class="detail-label">Account Created</div><div class="detail-value">—</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/audit">Audit Trail</a></footer>
+  </div>
+</div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

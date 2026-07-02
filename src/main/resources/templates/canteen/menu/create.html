@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>New Menu Item — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('canteen')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="/dashboard">Home</a></li><li class="breadcrumb-item"><a href="/canteen">Canteen</a></li><li class="breadcrumb-item"><a href="/canteen/menu-items">Menu Items</a></li><li class="breadcrumb-item active">New</li></ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-menu-button me-2"></i>New Menu Item</h1></div>
+    <div class="page-header-actions"><a href="/canteen/menu-items" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back</a></div>
+  </div>
+  <div class="row"><div class="col-lg-8">
+    <div class="cms-card">
+      <div class="card-header-cms"><h5>Menu Item Details</h5></div>
+      <div class="card-body-cms">
+        <form action="/canteen/menu-items/create" method="post">
+          <div class="row g-3">
+            <div class="col-sm-4"><label class="form-label">Code <span class="text-danger">*</span></label><input type="text" name="code" class="form-control" placeholder="MI-001" required/></div>
+            <div class="col-sm-8"><label class="form-label">Name <span class="text-danger">*</span></label><input type="text" name="name" class="form-control" placeholder="Item name" required/></div>
+            <div class="col-sm-6"><label class="form-label">Category <span class="text-danger">*</span></label>
+              <select name="category" class="form-select" required><option>BREAKFAST</option><option>LUNCH</option><option>SNACK</option><option>DINNER</option><option>BEVERAGE</option></select></div>
+            <div class="col-sm-6"><label class="form-label">Unit Price (₹) <span class="text-danger">*</span></label><input type="number" name="unitPrice" class="form-control" placeholder="0.00" step="0.01" min="0" required/></div>
+            <div class="col-sm-6"><label class="form-label">Linked Recipe</label><select name="recipeId" class="form-select"><option value="">None</option></select></div>
+            <div class="col-sm-6"><label class="form-label">Unit</label><select name="unit" class="form-select"><option>PLATE</option><option>CUP</option><option>PIECE</option><option>GLASS</option><option>BOWL</option></select></div>
+            <div class="col-12"><label class="form-label">Available Days</label>
+              <div class="d-flex flex-wrap gap-2">
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="days" value="MON" checked/><label class="form-check-label">Mon</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="days" value="TUE" checked/><label class="form-check-label">Tue</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="days" value="WED" checked/><label class="form-check-label">Wed</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="days" value="THU" checked/><label class="form-check-label">Thu</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="days" value="FRI" checked/><label class="form-check-label">Fri</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="days" value="SAT"/><label class="form-check-label">Sat</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="days" value="SUN"/><label class="form-check-label">Sun</label></div>
+              </div>
+            </div>
+            <div class="col-12"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2"></textarea></div>
+            <div class="col-12"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="isActive" checked/><label class="form-check-label">Active</label></div></div>
+          </div>
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-cms-primary"><i class="bi bi-save me-1"></i>Save</button>
+            <a href="/canteen/menu-items" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div></div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS</footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script></body></html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Canteen Service — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('canteen')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="/dashboard">Home</a></li><li class="breadcrumb-item active">Canteen Service</li></ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-cup-hot me-2"></i>Canteen Service</h1><div class="page-subtitle">Menu, preparation orders, consumption, wastage and daily reports</div></div>
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#E8F5E9;color:#2E7D32;"><i class="bi bi-menu-button"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Active Menu Items</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#FFF3E0;color:#E65100;"><i class="bi bi-clock-history"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Active Prep Orders</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#E3F2FD;color:#1565C0;"><i class="bi bi-bar-chart"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Stock Items</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#F3E5F5;color:#6A1B9A;"><i class="bi bi-file-earmark-bar-graph"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Reports Pending</div></div></div></div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-4"><a href="/canteen/menu-items" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-menu-button"></i></div><div class="module-tile-label">Menu Items</div><div class="module-tile-sub">Daily menu management</div></div></a></div>
+    <div class="col-md-4"><a href="/canteen/preparation-orders" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-clock-history"></i></div><div class="module-tile-label">Preparation Orders</div><div class="module-tile-sub">Meal preparation lifecycle</div></div></a></div>
+    <div class="col-md-4"><a href="/canteen/stock" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-bar-chart"></i></div><div class="module-tile-label">Canteen Stock</div><div class="module-tile-sub">Ingredient inventory</div></div></a></div>
+    <div class="col-md-4"><a href="/canteen/consumption" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-graph-down"></i></div><div class="module-tile-label">Consumption</div><div class="module-tile-sub">Daily consumption records</div></div></a></div>
+    <div class="col-md-4"><a href="/canteen/wastage" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-trash3"></i></div><div class="module-tile-label">Wastage</div><div class="module-tile-sub">Wastage tracking</div></div></a></div>
+    <div class="col-md-4"><a href="/canteen/daily-reports" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-file-earmark-bar-graph"></i></div><div class="module-tile-label">Daily Reports</div><div class="module-tile-sub">Summarise &amp; approve daily ops</div></div></a></div>
+    <div class="col-md-4"><a href="/canteen/material-requests" class="text-decoration-none"><div class="module-tile" style="border-top-color:var(--cms-accent);"><div class="module-tile-icon" style="background:linear-gradient(135deg,#1565C0,#42A5F5);"><i class="bi bi-box-arrow-up-right"></i></div><div class="module-tile-label">Material Requests</div><div class="module-tile-sub">Request raw materials from Store</div></div></a></div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/dashboard">Dashboard</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

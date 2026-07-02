@@ -1,0 +1,8 @@
+com/cms/prototype/CmsPrototypeApplication.class
+com/cms/prototype/controller/KitchenController.class
+com/cms/prototype/controller/NotificationController.class
+com/cms/prototype/controller/DashboardController.class
+com/cms/prototype/controller/CanteenController.class
+com/cms/prototype/controller/AuthController.class
+com/cms/prototype/controller/UserController.class
+com/cms/prototype/controller/StoreController.class

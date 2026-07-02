@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Notifications — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('notifications')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="/dashboard">Home</a></li><li class="breadcrumb-item active">Notifications</li></ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-bell me-2"></i>Notification Centre</h1><div class="page-subtitle">System notification log and delivery status</div></div>
+    <div class="page-header-actions"><a href="/notifications/stats" class="btn btn-outline-secondary btn-sm"><i class="bi bi-bar-chart me-1"></i>Stats</a></div>
+  </div>
+  <div class="row g-3 mb-3">
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#E8F5E9;color:#2E7D32;"><i class="bi bi-check-circle"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Delivered</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#FFF3E0;color:#E65100;"><i class="bi bi-hourglass-split"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Pending</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#FCE4D6;color:#A32020;"><i class="bi bi-x-circle"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Failed</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#E3F2FD;color:#1565C0;"><i class="bi bi-arrow-clockwise"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Retried</div></div></div></div>
+  </div>
+  <div class="cms-card">
+    <div class="filter-bar">
+      <div class="search-box"><i class="bi bi-search"></i><input type="text" class="form-control" placeholder="Search notifications..."/></div>
+      <select class="form-select form-select-sm" style="width:auto;"><option>All Types</option><option>EMAIL</option><option>SMS</option><option>IN_APP</option><option>PUSH</option></select>
+      <select class="form-select form-select-sm" style="width:auto;"><option>All Status</option><option>PENDING</option><option>DELIVERED</option><option>FAILED</option><option>RETRYING</option></select>
+      <select class="form-select form-select-sm" style="width:auto;"><option>All Events</option><option>USER_CREATED</option><option>PO_SENT</option><option>CHALLAN_DISPATCHED</option><option>REPORT_SUBMITTED</option><option>REPORT_APPROVED</option></select>
+      <input type="date" class="form-control form-control-sm" style="width:auto;"/>
+    </div>
+    <div class="cms-table-wrapper">
+      <table class="cms-table">
+        <thead><tr><th>ID</th><th>Type</th><th>Event</th><th>Recipient</th><th>Subject / Message</th><th>Status</th><th>Attempts</th><th>Sent At</th><th>Actions</th></tr></thead>
+        <tbody><tr><td colspan="9" class="text-center text-muted py-4"><i class="bi bi-bell-slash me-2"></i>No notifications found</td></tr></tbody>
+      </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-between p-3 border-top">
+      <div class="fs-sm text-muted">Showing — entries</div>
+      <nav><ul class="pagination cms-pagination mb-0"><li class="page-item disabled"><a class="page-link" href="#">«</a></li><li class="page-item active"><a class="page-link" href="#">1</a></li><li class="page-item disabled"><a class="page-link" href="#">»</a></li></ul></nav>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/dashboard">Dashboard</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script></body></html>

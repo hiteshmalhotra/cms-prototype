@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>New Production Order — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('kitchen')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="/dashboard">Home</a></li><li class="breadcrumb-item"><a href="/kitchen">Kitchen</a></li><li class="breadcrumb-item"><a href="/kitchen/production-orders">Production Orders</a></li><li class="breadcrumb-item active">New</li></ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-fire me-2"></i>New Production Order</h1></div>
+    <div class="page-header-actions"><a href="/kitchen/production-orders" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back</a></div>
+  </div>
+  <div class="row"><div class="col-lg-8">
+    <div class="cms-card">
+      <div class="card-header-cms"><h5>Order Details</h5></div>
+      <div class="card-body-cms">
+        <form action="/kitchen/production-orders/create" method="post">
+          <div class="row g-3">
+            <div class="col-sm-8"><label class="form-label">Recipe <span class="text-danger">*</span></label>
+              <select name="recipeId" class="form-select" required><option value="">Select recipe...</option></select></div>
+            <div class="col-sm-4"><label class="form-label">Quantity (batches) <span class="text-danger">*</span></label><input type="number" name="quantity" class="form-control" placeholder="1" min="1" required/></div>
+            <div class="col-sm-6"><label class="form-label">Scheduled Date <span class="text-danger">*</span></label><input type="date" name="scheduledDate" class="form-control" required/></div>
+            <div class="col-sm-6"><label class="form-label">Assigned To</label><input type="text" name="assignedTo" class="form-control" placeholder="Chef / team"/></div>
+            <div class="col-12"><label class="form-label">Notes</label><textarea name="notes" class="form-control" rows="3"></textarea></div>
+          </div>
+          <div class="cms-card mt-3" style="background:#F8F9FA;">
+            <div class="card-body-cms">
+              <h6 class="fw-600 mb-2"><i class="bi bi-info-circle me-1"></i>Estimated Ingredient Requirement</h6>
+              <p class="fs-sm text-muted mb-0">Select a recipe and enter quantity to see the estimated raw material requirement. Availability will be checked against kitchen stock.</p>
+            </div>
+          </div>
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" name="action" value="PLANNED" class="btn btn-outline-secondary"><i class="bi bi-calendar me-1"></i>Schedule</button>
+            <button type="submit" name="action" value="IN_PROGRESS" class="btn btn-cms-primary"><i class="bi bi-fire me-1"></i>Start Production</button>
+            <a href="/kitchen/production-orders" class="btn btn-outline-danger">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div></div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS</footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script></body></html>

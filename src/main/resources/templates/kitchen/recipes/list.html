@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Recipes — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('kitchen')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="/dashboard">Home</a></li><li class="breadcrumb-item"><a href="/kitchen">Kitchen</a></li><li class="breadcrumb-item active">Recipes</li></ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-journal-richtext me-2"></i>Recipes</h1><div class="page-subtitle">Dish recipes and bill of materials</div></div>
+    <div class="page-header-actions"><a href="/kitchen/recipes/create" class="btn btn-cms-primary btn-sm"><i class="bi bi-plus me-1"></i>New Recipe</a></div>
+  </div>
+  <div class="cms-card">
+    <div class="filter-bar">
+      <div class="search-box"><i class="bi bi-search"></i><input type="text" class="form-control" placeholder="Search recipes..."/></div>
+      <select class="form-select form-select-sm" style="width:auto;"><option>All Status</option><option>DRAFT</option><option>APPROVED</option><option>DEPRECATED</option></select>
+    </div>
+    <div class="cms-table-wrapper">
+      <table class="cms-table">
+        <thead><tr><th>Code</th><th>Recipe Name</th><th>Category</th><th>Yield</th><th>Prep Time</th><th>Cost</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody><tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>No recipes found</td></tr></tbody>
+      </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-between p-3 border-top">
+      <div class="fs-sm text-muted">Showing — entries</div>
+      <nav><ul class="pagination cms-pagination mb-0"><li class="page-item disabled"><a class="page-link" href="#">«</a></li><li class="page-item active"><a class="page-link" href="#">1</a></li><li class="page-item disabled"><a class="page-link" href="#">»</a></li></ul></nav>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/kitchen">Kitchen</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script></body></html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Material Request Detail — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('canteen-mr')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/canteen">Canteen</a></li>
+    <li class="breadcrumb-item"><a href="/canteen/material-requests">Material Requests</a></li>
+    <li class="breadcrumb-item active">MR-—</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1><i class="bi bi-box-arrow-up-right me-2"></i>Material Request — MR-—</h1>
+      <div class="page-subtitle">Canteen → Store raw material request</div>
+    </div>
+    <div class="page-header-actions">
+      <a href="/canteen/material-requests" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back</a>
+      <!-- Submit button — visible when DRAFT -->
+      <form action="/canteen/material-requests/1/submit" method="post" class="d-inline">
+        <button type="submit" class="btn btn-cms-primary btn-sm"><i class="bi bi-send me-1"></i>Submit to Store</button>
+      </form>
+      <!-- Verify button — visible when RECEIVED (canteen verifies receipt) -->
+      <form action="/canteen/material-requests/1/verify" method="post" class="d-inline">
+        <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-check2-all me-1"></i>Verify Receipt</button>
+      </form>
+      <!-- Cancel button — visible when DRAFT/SUBMITTED -->
+      <form action="/canteen/material-requests/1/cancel" method="post" class="d-inline">
+        <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm="Cancel this material request?"><i class="bi bi-x-circle me-1"></i>Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Status stepper -->
+  <div class="cms-card mb-3 p-3">
+    <div class="d-flex align-items-center justify-content-between position-relative" style="overflow-x:auto;">
+      <div class="workflow-step active">
+        <div class="step-circle"><i class="bi bi-pencil-square"></i></div>
+        <div class="step-label">DRAFT</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="workflow-step">
+        <div class="step-circle"><i class="bi bi-send"></i></div>
+        <div class="step-label">SUBMITTED</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="workflow-step">
+        <div class="step-circle"><i class="bi bi-clipboard-check"></i></div>
+        <div class="step-label">APPROVED</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="workflow-step">
+        <div class="step-circle"><i class="bi bi-box-seam"></i></div>
+        <div class="step-label">PACKING</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="workflow-step">
+        <div class="step-circle"><i class="bi bi-truck"></i></div>
+        <div class="step-label">IN TRANSIT</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="workflow-step">
+        <div class="step-circle"><i class="bi bi-box-arrow-in-down"></i></div>
+        <div class="step-label">RECEIVED</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="workflow-step">
+        <div class="step-circle"><i class="bi bi-check2-all"></i></div>
+        <div class="step-label">VERIFIED</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <!-- Main info -->
+    <div class="col-md-8">
+      <div class="cms-card mb-3">
+        <div class="card-header-cms"><h5><i class="bi bi-info-circle me-2"></i>Request Details</h5></div>
+        <div class="card-body-cms">
+          <div class="row g-3">
+            <div class="col-sm-4"><div class="detail-label">Request #</div><div class="detail-value">MR-—</div></div>
+            <div class="col-sm-4"><div class="detail-label">Status</div><div class="detail-value"><span class="cms-badge badge-draft">DRAFT</span></div></div>
+            <div class="col-sm-4"><div class="detail-label">Priority</div><div class="detail-value"><span class="cms-badge badge-pending">NORMAL</span></div></div>
+            <div class="col-sm-4"><div class="detail-label">Requested Date</div><div class="detail-value">—</div></div>
+            <div class="col-sm-4"><div class="detail-label">Required By</div><div class="detail-value">—</div></div>
+            <div class="col-sm-4"><div class="detail-label">Requested By</div><div class="detail-value">—</div></div>
+            <div class="col-sm-6"><div class="detail-label">Canteen Location</div><div class="detail-value">—</div></div>
+            <div class="col-sm-6"><div class="detail-label">Store Reference Challan</div><div class="detail-value">—</div></div>
+            <div class="col-12"><div class="detail-label">Purpose / Remarks</div><div class="detail-value">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requested items -->
+      <div class="cms-card mb-3">
+        <div class="card-header-cms"><h5><i class="bi bi-list-ul me-2"></i>Requested Items</h5></div>
+        <div class="cms-table-wrapper">
+          <table class="cms-table">
+            <thead>
+              <tr><th>#</th><th>Item</th><th>Unit</th><th>Qty Requested</th><th>Qty Approved</th><th>Qty Dispatched</th><th>Qty Received</th><th>Variance</th></tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="8" class="text-center text-muted py-3">No items</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Receive confirmation form — shown only when IN_TRANSIT -->
+      <div class="cms-card" id="receiveSection">
+        <div class="card-header-cms" style="background:#E8F5E9;">
+          <h5><i class="bi bi-box-arrow-in-down me-2"></i>Confirm Receipt</h5>
+        </div>
+        <div class="card-body-cms">
+          <p class="fs-sm text-muted mb-3">The challan has been dispatched by Store. Record actual quantities received below. Discrepancies will trigger a shortage alert notification.</p>
+          <form action="/canteen/material-requests/1/verify" method="post">
+            <div class="cms-table-wrapper">
+              <table class="cms-table">
+                <thead><tr><th>Item</th><th>Qty Dispatched</th><th>Qty Received (Actual)</th><th>Condition</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>—</td>
+                    <td>—</td>
+                    <td><input type="number" name="qtyReceived[]" class="form-control form-control-sm" min="0" step="0.001"/></td>
+                    <td>
+                      <select name="condition[]" class="form-select form-select-sm">
+                        <option>GOOD</option><option>PARTIAL</option><option>DAMAGED</option>
+                      </select>
+                    </td>
+                    <td><input type="text" name="receiveNotes[]" class="form-control form-control-sm" placeholder="Optional"/></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-check2-all me-1"></i>Confirm &amp; Verify Receipt</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline sidebar -->
+    <div class="col-md-4">
+      <div class="cms-card mb-3">
+        <div class="card-header-cms"><h5><i class="bi bi-clock-history me-2"></i>Status Timeline</h5></div>
+        <div class="card-body-cms">
+          <div class="cms-timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot success"></div>
+              <div class="timeline-content">Request Created<div class="timeline-meta">—</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cms-card">
+        <div class="card-header-cms"><h5><i class="bi bi-shop me-2"></i>Store Actions</h5></div>
+        <div class="card-body-cms">
+          <p class="fs-sm text-muted mb-2">Once submitted, Store will process this request. You can track progress here.</p>
+          <a href="/store/material-requests" class="btn btn-outline-secondary btn-sm w-100 mb-2"><i class="bi bi-eye me-1"></i>View in Store</a>
+          <div class="detail-label mt-2">Store Approved By</div><div class="detail-value">—</div>
+          <div class="detail-label mt-2">Dispatch Date</div><div class="detail-value">—</div>
+          <div class="detail-label mt-2">Challan Reference</div><div class="detail-value">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/canteen">Canteen</a> &nbsp;|&nbsp; <a href="/store/material-requests">Store Requests</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

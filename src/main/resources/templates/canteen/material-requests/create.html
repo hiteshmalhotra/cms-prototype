@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>New Material Request — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('canteen-mr')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/canteen">Canteen</a></li>
+    <li class="breadcrumb-item"><a href="/canteen/material-requests">Material Requests</a></li>
+    <li class="breadcrumb-item active">New Request</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-box-arrow-up-right me-2"></i>New Material Request</h1><div class="page-subtitle">Request raw materials from Store for canteen operations</div></div>
+    <div class="page-header-actions"><a href="/canteen/material-requests" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back</a></div>
+  </div>
+
+  <form action="/canteen/material-requests/create" method="post">
+    <!-- Header card -->
+    <div class="cms-card mb-3">
+      <div class="card-header-cms"><h5><i class="bi bi-info-circle me-2"></i>Request Header</h5></div>
+      <div class="card-body-cms">
+        <div class="row g-3">
+          <div class="col-sm-4">
+            <label class="form-label">Request Date <span class="text-danger">*</span></label>
+            <input type="date" name="requestDate" class="form-control" required/>
+          </div>
+          <div class="col-sm-4">
+            <label class="form-label">Required By (Date) <span class="text-danger">*</span></label>
+            <input type="date" name="requiredBy" class="form-control" required/>
+          </div>
+          <div class="col-sm-4">
+            <label class="form-label">Priority</label>
+            <select name="priority" class="form-select">
+              <option value="NORMAL">Normal</option>
+              <option value="HIGH">High</option>
+              <option value="URGENT">Urgent</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label">Canteen Location</label>
+            <select name="locationId" class="form-select">
+              <option value="">Select location...</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label">Requested By</label>
+            <input type="text" name="requestedBy" class="form-control" placeholder="Your name / canteen manager" value="Canteen Manager"/>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Purpose / Remarks</label>
+            <textarea name="remarks" class="form-control" rows="2" placeholder="Brief description of why these materials are needed..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Items card -->
+    <div class="cms-card mb-3">
+      <div class="card-header-cms d-flex justify-content-between align-items-center">
+        <h5><i class="bi bi-list-ul me-2"></i>Requested Items</h5>
+        <button type="button" class="btn btn-outline-primary btn-sm" id="addItemRow"><i class="bi bi-plus me-1"></i>Add Item</button>
+      </div>
+      <div class="cms-table-wrapper">
+        <table class="cms-table" id="itemsTable">
+          <thead>
+            <tr>
+              <th style="width:35%">Item / Ingredient</th>
+              <th>Unit</th>
+              <th>Qty Requested</th>
+              <th>Current Stock</th>
+              <th>Remarks</th>
+              <th style="width:40px;"></th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody">
+            <tr class="item-row">
+              <td>
+                <select name="itemId[]" class="form-select form-select-sm" required>
+                  <option value="">Select item...</option>
+                </select>
+              </td>
+              <td><input type="text" name="unit[]" class="form-control form-control-sm" placeholder="—" readonly/></td>
+              <td><input type="number" name="qtyRequested[]" class="form-control form-control-sm" placeholder="0" min="0.001" step="0.001" required/></td>
+              <td><input type="text" name="currentStock[]" class="form-control form-control-sm" placeholder="—" readonly style="color:var(--cms-text-muted);"/></td>
+              <td><input type="text" name="itemRemarks[]" class="form-control form-control-sm" placeholder="Optional"/></td>
+              <td><button type="button" class="btn btn-sm btn-outline-danger remove-row"><i class="bi bi-trash"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-3 border-top">
+        <div class="alert alert-light mb-0 py-2 px-3" style="font-size:0.8rem;">
+          <i class="bi bi-lightbulb me-1 text-warning"></i>
+          After saving as <strong>Draft</strong>, review and click <strong>Submit to Store</strong> to send the request for Store approval.
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" name="action" value="DRAFT" class="btn btn-outline-secondary">
+        <i class="bi bi-save me-1"></i>Save as Draft
+      </button>
+      <button type="submit" name="action" value="SUBMITTED" class="btn btn-cms-primary">
+        <i class="bi bi-send me-1"></i>Save &amp; Submit to Store
+      </button>
+      <a href="/canteen/material-requests" class="btn btn-outline-danger">Cancel</a>
+    </div>
+  </form>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/canteen">Canteen</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+<script>
+document.getElementById('addItemRow').addEventListener('click', function(){
+  const tbody = document.getElementById('itemsBody');
+  const row = tbody.querySelector('.item-row').cloneNode(true);
+  row.querySelectorAll('input[type=text], input[type=number]').forEach(i => i.value = '');
+  row.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+  tbody.appendChild(row);
+});
+document.addEventListener('click', function(e){
+  if(e.target.closest('.remove-row')){
+    const rows = document.querySelectorAll('.item-row');
+    if(rows.length > 1) e.target.closest('tr').remove();
+  }
+});
+</script>
+</body></html>

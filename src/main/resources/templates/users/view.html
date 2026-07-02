@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>User Details — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('users-list')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/users">User Management</a></li>
+    <li class="breadcrumb-item active">User Details</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-person-fill me-2"></i>User Details</h1><div class="page-subtitle">View complete user information and activity</div></div>
+    <div class="page-header-actions">
+      <a href="/users" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back</a>
+      <a href="/users/1/edit" class="btn btn-cms-primary btn-sm"><i class="bi bi-pencil me-1"></i>Edit</a>
+      <a href="/users/1/delete" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash me-1"></i>Delete</a>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="cms-card text-center p-4 mb-3">
+        <div style="width:80px;height:80px;background:var(--cms-primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem;color:white;">U</div>
+        <h5 class="fw-600 mb-1">— —</h5>
+        <div class="fs-sm text-muted mb-2">—@cms.org</div>
+        <span class="cms-badge badge-sent mb-3 d-inline-block">ROLE_—</span><br/>
+        <span class="cms-badge badge-active">Active</span>
+      </div>
+      <div class="cms-card">
+        <div class="card-header-cms"><h5>Quick Actions</h5></div>
+        <div class="card-body-cms d-grid gap-2">
+          <a href="/users/1/edit" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil me-1"></i>Edit User</a>
+          <button class="btn btn-outline-warning btn-sm"><i class="bi bi-person-dash me-1"></i>Deactivate</button>
+          <a href="/users/1/audit" class="btn btn-outline-secondary btn-sm"><i class="bi bi-journal-text me-1"></i>View Audit Trail</a>
+          <a href="/users/1/delete" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash me-1"></i>Delete User</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="cms-card mb-3">
+        <div class="card-header-cms">
+          <h5><i class="bi bi-info-circle me-2"></i>Account Details</h5>
+        </div>
+        <div class="card-body-cms">
+          <ul class="nav cms-tabs border-bottom mb-3" id="userTabs">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabInfo">Information</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabActivity">Recent Activity</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabPermissions">Permissions</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tabInfo">
+              <div class="row g-3">
+                <div class="col-sm-6"><div class="detail-label">First Name</div><div class="detail-value">—</div></div>
+                <div class="col-sm-6"><div class="detail-label">Last Name</div><div class="detail-value">—</div></div>
+                <div class="col-sm-6"><div class="detail-label">Email</div><div class="detail-value">—</div></div>
+                <div class="col-sm-6"><div class="detail-label">Role</div><div class="detail-value">—</div></div>
+                <div class="col-sm-6"><div class="detail-label">Status</div><div class="detail-value"><span class="cms-badge badge-active">Active</span></div></div>
+                <div class="col-sm-6"><div class="detail-label">Last Login</div><div class="detail-value">—</div></div>
+                <div class="col-sm-6"><div class="detail-label">User ID</div><div class="detail-value fs-sm text-muted">—</div></div>
+                <div class="col-sm-6"><div class="detail-label">Created At</div><div class="detail-value">—</div></div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="tabActivity">
+              <div class="cms-timeline">
+                <div class="timeline-item"><div class="timeline-dot success"></div><div class="timeline-content">Logged in successfully<div class="timeline-meta"><i class="bi bi-clock me-1"></i>—</div></div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">Password changed<div class="timeline-meta"><i class="bi bi-clock me-1"></i>—</div></div></div>
+                <div class="timeline-item"><div class="timeline-dot success"></div><div class="timeline-content">Account created<div class="timeline-meta"><i class="bi bi-clock me-1"></i>—</div></div></div>
+              </div>
+              <div class="text-center mt-2"><a href="/users/1/audit" class="fs-sm">View Full Audit Trail <i class="bi bi-arrow-right"></i></a></div>
+            </div>
+            <div class="tab-pane fade" id="tabPermissions">
+              <p class="fs-sm text-muted mb-2">Permissions based on assigned role:</p>
+              <div class="table-responsive">
+                <table class="table table-sm" style="font-size:0.82rem;">
+                  <thead class="table-light"><tr><th>Module</th><th>View</th><th>Create</th><th>Edit</th><th>Delete</th><th>Approve</th></tr></thead>
+                  <tbody>
+                    <tr><td>Store Service</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>Kitchen Service</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>Canteen Service</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/dashboard">Dashboard</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

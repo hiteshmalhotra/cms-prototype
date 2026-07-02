@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Kitchen Service — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('kitchen')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="/dashboard">Home</a></li><li class="breadcrumb-item active">Kitchen Service</li></ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left"><h1><i class="bi bi-egg-fried me-2"></i>Kitchen Service</h1><div class="page-subtitle">Recipes, production orders, kitchen stock and transfers</div></div>
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#E8F5E9;color:#2E7D32;"><i class="bi bi-journal-richtext"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Recipes</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#FFF3E0;color:#E65100;"><i class="bi bi-fire"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Active Productions</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#E3F2FD;color:#1565C0;"><i class="bi bi-box-seam"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Stock Items</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#FCE4D6;color:#A32020;"><i class="bi bi-arrow-left-right"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Pending Transfers</div></div></div></div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-4"><a href="/kitchen/recipe-items" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-basket"></i></div><div class="module-tile-label">Recipe Items</div><div class="module-tile-sub">Kitchen ingredient master</div></div></a></div>
+    <div class="col-md-4"><a href="/kitchen/recipes" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-journal-richtext"></i></div><div class="module-tile-label">Recipes</div><div class="module-tile-sub">Dish recipes and BOM</div></div></a></div>
+    <div class="col-md-4"><a href="/kitchen/production-orders" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-fire"></i></div><div class="module-tile-label">Production Orders</div><div class="module-tile-sub">Production lifecycle</div></div></a></div>
+    <div class="col-md-4"><a href="/kitchen/stock" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-bar-chart"></i></div><div class="module-tile-label">Kitchen Stock</div><div class="module-tile-sub">Current inventory</div></div></a></div>
+    <div class="col-md-4"><a href="/kitchen/ledger" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-journal-bookmark"></i></div><div class="module-tile-label">Stock Ledger</div><div class="module-tile-sub">Transaction history</div></div></a></div>
+    <div class="col-md-4"><a href="/kitchen/transfers" class="text-decoration-none"><div class="module-tile"><div class="module-tile-icon"><i class="bi bi-arrow-left-right"></i></div><div class="module-tile-label">Transfers</div><div class="module-tile-sub">Store ↔ Kitchen transfers</div></div></a></div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/dashboard">Dashboard</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

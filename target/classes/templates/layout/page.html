@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--
+  USAGE in child page:
+  <html th:replace="~{layout/page :: page(activeModule='store-items', pageTitle='Items', content=~{::content})}">
+-->
+<body>
+<th:block th:fragment="page(activeModule, pageTitle, breadcrumbItems, content)">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title th:text="${pageTitle} + ' — CMS'">CMS</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link rel="stylesheet" th:href="@{/css/cms-theme.css}"/>
+</head>
+<body>
+<div class="cms-shell">
+  <!-- Sidebar -->
+  <th:block th:replace="~{layout/main :: sidebar(${activeModule})}"></th:block>
+  <!-- Main -->
+  <div class="cms-main">
+    <!-- Topbar -->
+    <header class="cms-topbar">
+      <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+      <nav class="topbar-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+          <th:block th:if="${breadcrumbItems}" th:utext="${breadcrumbItems}"></th:block>
+          <li th:unless="${breadcrumbItems}" class="breadcrumb-item active" th:text="${pageTitle}">Page</li>
+        </ol>
+      </nav>
+      <div class="topbar-actions">
+        <button class="topbar-icon-btn" onclick="location='/notifications'" title="Notifications">
+          <i class="bi bi-bell"></i><span class="badge-dot"></span>
+        </button>
+        <div class="dropdown">
+          <div class="topbar-user" data-bs-toggle="dropdown">
+            <div class="t-avatar">A</div>
+            <div><div class="t-name">Admin User</div><div class="t-role">Administrator</div></div>
+            <i class="bi bi-chevron-down ms-1 fs-sm text-muted"></i>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="min-width:200px;font-size:0.855rem;">
+            <li><h6 class="dropdown-header">admin@cms.org</h6></li>
+            <li><a class="dropdown-item" href="/profile"><i class="bi bi-person me-2"></i>My Profile</a></li>
+            <li><a class="dropdown-item" href="/change-password"><i class="bi bi-key me-2"></i>Change Password</a></li>
+            <li><a class="dropdown-item" href="/settings"><i class="bi bi-gear me-2"></i>Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <!-- Content -->
+    <main class="cms-content" id="cmsContent">
+      <th:block th:replace="${content}"></th:block>
+    </main>
+    <footer class="cms-footer">
+      &copy; 2026 Canteen Management System &nbsp;|&nbsp; v1.0.0 &nbsp;|&nbsp;
+      <a href="/audit">Audit Trail</a> &nbsp;|&nbsp; <a href="/settings">Settings</a>
+    </footer>
+  </div>
+</div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body>
+</html>
+</th:block>
+</body>
+</html>

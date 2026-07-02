@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Material Requests — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('canteen-mr')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/canteen">Canteen</a></li>
+    <li class="breadcrumb-item active">Material Requests</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1><i class="bi bi-box-arrow-up-right me-2"></i>Material Requests</h1>
+      <div class="page-subtitle">Raise and track requests for raw materials from Store</div>
+    </div>
+    <div class="page-header-actions">
+      <a href="/canteen/material-requests/create" class="btn btn-cms-primary btn-sm"><i class="bi bi-plus me-1"></i>New Request</a>
+    </div>
+  </div>
+
+  <!-- Status summary cards -->
+  <div class="row g-3 mb-3">
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#E3F2FD;color:#1565C0;"><i class="bi bi-file-earmark-text"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Draft</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#FFF3E0;color:#E65100;"><i class="bi bi-send"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Submitted</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#E8F5E9;color:#2E7D32;"><i class="bi bi-truck"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Dispatched / In Transit</div></div></div></div>
+    <div class="col-sm-6 col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#F3E5F5;color:#6A1B9A;"><i class="bi bi-check2-all"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Received</div></div></div></div>
+  </div>
+
+  <!-- Lifecycle hint banner -->
+  <div class="alert alert-info d-flex align-items-center gap-3 mb-3 py-2 px-3" style="font-size:0.82rem;border-radius:8px;">
+    <i class="bi bi-info-circle-fill fs-5"></i>
+    <div>
+      <strong>Workflow:</strong>
+      <span class="badge bg-secondary ms-1">DRAFT</span>
+      <i class="bi bi-arrow-right mx-1"></i>
+      <span class="badge bg-warning text-dark">SUBMITTED</span>
+      <i class="bi bi-arrow-right mx-1 text-muted">(Store reviews)</i>
+      <span class="badge bg-primary">APPROVED</span>
+      <i class="bi bi-arrow-right mx-1"></i>
+      <span class="badge bg-info text-dark">PACKING</span>
+      <i class="bi bi-arrow-right mx-1"></i>
+      <span class="badge" style="background:#5B4FCF;color:#fff;">IN_TRANSIT</span>
+      <i class="bi bi-arrow-right mx-1">(Canteen receives)</i>
+      <span class="badge bg-success">RECEIVED</span>
+      <i class="bi bi-arrow-right mx-1"></i>
+      <span class="badge" style="background:#2E7D32;color:#fff;">VERIFIED</span>
+    </div>
+  </div>
+
+  <div class="cms-card">
+    <div class="filter-bar">
+      <div class="search-box"><i class="bi bi-search"></i><input type="text" class="form-control" placeholder="Search request number..."/></div>
+      <select class="form-select form-select-sm" style="width:auto;">
+        <option>All Status</option>
+        <option>DRAFT</option><option>SUBMITTED</option><option>APPROVED</option>
+        <option>PACKING</option><option>IN_TRANSIT</option><option>RECEIVED</option>
+        <option>VERIFIED</option><option>REJECTED</option><option>CANCELLED</option>
+      </select>
+      <input type="date" class="form-control form-control-sm" style="width:auto;"/>
+    </div>
+    <div class="cms-table-wrapper">
+      <table class="cms-table">
+        <thead>
+          <tr>
+            <th>Request #</th>
+            <th>Requested Date</th>
+            <th>Required By</th>
+            <th>Items</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Store Reference</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>No material requests found. <a href="/canteen/material-requests/create">Raise one now.</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-between p-3 border-top">
+      <div class="fs-sm text-muted">Showing — entries</div>
+      <nav><ul class="pagination cms-pagination mb-0">
+        <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item disabled"><a class="page-link" href="#">»</a></li>
+      </ul></nav>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/canteen">Canteen</a> &nbsp;|&nbsp; <a href="/store/material-requests">Store View</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>
