@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Create BOM — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('store-production')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/store">Store</a></li>
+    <li class="breadcrumb-item"><a href="/store/production/bom">BOM Master</a></li>
+    <li class="breadcrumb-item active">Create BOM</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1><i class="bi bi-diagram-3 me-2"></i>Create Bill of Materials</h1>
+      <div class="page-subtitle">Define a new finished product and its component raw materials</div>
+    </div>
+  </div>
+
+  <form action="/store/production/bom/create" method="post">
+    <!-- Header -->
+    <div class="cms-card mb-3">
+      <h6 class="fw-semibold mb-3">Finished Product Details</h6>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">BOM Code <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Auto-generated" readonly/>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Finished Product / Output Item <span class="text-danger">*</span></label>
+          <select class="form-select"><option value="">— Select Item —</option><option>Chapati Flour Mix</option><option>Spice Blend (Standard)</option><option>Dal Mix (Lentil Blend)</option></select>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Output Qty <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" placeholder="e.g. 100" min="0.01" step="0.01"/>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Unit</label>
+          <input type="text" class="form-control" placeholder="kg" readonly/>
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Description</label>
+          <input type="text" class="form-control" placeholder="Brief description of this BOM"/>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Version</label>
+          <input type="text" class="form-control" value="v1.0"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOM Lines -->
+    <div class="cms-card mb-3">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-semibold mb-0">Component Raw Materials</h6>
+        <button type="button" class="btn btn-outline-primary btn-sm" id="addComponentBtn"><i class="bi bi-plus-lg me-1"></i>Add Component</button>
+      </div>
+      <div class="cms-table-wrapper">
+        <table class="cms-table" id="bomLinesTable">
+          <thead><tr><th>#</th><th>Raw Material / Item</th><th>Qty Required</th><th>Unit</th><th>Notes</th><th></th></tr></thead>
+          <tbody id="bomLines">
+            <tr data-row="1">
+              <td>1</td>
+              <td><select class="form-select form-select-sm"><option value="">— Select —</option><option>Wheat Flour</option><option>Salt</option><option>Water</option><option>Yeast</option></select></td>
+              <td><input type="number" class="form-control form-control-sm" placeholder="Qty" min="0.01" step="0.01"/></td>
+              <td><input type="text" class="form-control form-control-sm" placeholder="kg"/></td>
+              <td><input type="text" class="form-control form-control-sm" placeholder="Optional note"/></td>
+              <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i class="bi bi-trash"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>Save BOM</button>
+      <a href="/store/production/bom" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+  </form>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/store">Store</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+<script>
+let rowCount = 1;
+document.getElementById('addComponentBtn').addEventListener('click', function() {
+  rowCount++;
+  const tbody = document.getElementById('bomLines');
+  const tr = document.createElement('tr');
+  tr.setAttribute('data-row', rowCount);
+  tr.innerHTML = `<td>${rowCount}</td>
+    <td><select class="form-select form-select-sm"><option value="">— Select —</option><option>Wheat Flour</option><option>Salt</option><option>Water</option><option>Yeast</option></select></td>
+    <td><input type="number" class="form-control form-control-sm" placeholder="Qty" min="0.01" step="0.01"/></td>
+    <td><input type="text" class="form-control form-control-sm" placeholder="kg"/></td>
+    <td><input type="text" class="form-control form-control-sm" placeholder="Optional note"/></td>
+    <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i class="bi bi-trash"></i></button></td>`;
+  tbody.appendChild(tr);
+});
+</script>
+</body></html>

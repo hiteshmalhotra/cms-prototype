@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class CanteenController {
 
     @GetMapping
-    public String dashboard(Model m) { m.addAttribute("pageTitle","Canteen Dashboard"); m.addAttribute("activeModule","canteen"); return "canteen/dashboard"; }
+    public String dashboard(Model m) { m.addAttribute("pageTitle","Canteen Dashboard"); m.addAttribute("activeModule","canteen"); return "canteen/index"; }
 
     @GetMapping("/menu-items") public String menu(Model m) { m.addAttribute("pageTitle","Menu Items"); m.addAttribute("activeModule","canteen-menu"); return "canteen/menu/list"; }
     @GetMapping("/menu-items/create") public String menuCreate(Model m) { m.addAttribute("pageTitle","Add Menu Item"); m.addAttribute("activeModule","canteen-menu"); return "canteen/menu/create"; }
@@ -51,4 +51,7 @@ public class CanteenController {
     @PostMapping("/material-requests/{id}/submit") public String mrSubmit(@PathVariable String id) { return "redirect:/canteen/material-requests/" + id + "?sent=true"; }
     @PostMapping("/material-requests/{id}/cancel") public String mrCancel(@PathVariable String id) { return "redirect:/canteen/material-requests?deleted=true"; }
     @PostMapping("/material-requests/{id}/verify") public String mrVerify(@PathVariable String id) { return "redirect:/canteen/material-requests/" + id + "?saved=true"; }
+
+    // ── Canteen Ledger ──
+    @GetMapping("/ledger") public String ledger(Model m) { m.addAttribute("pageTitle","Canteen Ledger"); m.addAttribute("activeModule","canteen-ledger"); return "canteen/ledger"; }
 }

@@ -33,8 +33,28 @@
     </div>
     <div class="cms-table-wrapper">
       <table class="cms-table">
-        <thead><tr><th>Item Code</th><th>Item Name</th><th>Category</th><th>Unit</th><th>Current Qty</th><th>Reorder Qty</th><th>Min Stock</th><th>Level</th><th>Last Updated</th></tr></thead>
-        <tbody><tr><td colspan="9" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>No stock records found</td></tr></tbody>
+        <thead><tr><th>Item Code</th><th>Item Name</th><th>Category</th><th>Unit</th><th>Current Qty</th><th>Avg Daily Use</th><th title="Current Qty ÷ Avg Daily Consumption (7-day rolling)">Days of Stock</th><th>Reorder Qty</th><th>Min Stock</th><th>Level</th><th>Last Updated</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>ITM-001</td><td>Wheat Flour</td><td>Grains</td><td>kg</td>
+            <td>250</td><td>18.5</td>
+            <td><span class="badge bg-success">13.5 days</span></td>
+            <td>50</td><td>25</td><td><span class="badge bg-success">Normal</span></td><td>15 Jul 2026</td>
+          </tr>
+          <tr>
+            <td>ITM-002</td><td>Rice (Basmati)</td><td>Grains</td><td>kg</td>
+            <td>80</td><td>22.0</td>
+            <td><span class="badge bg-warning text-dark">3.6 days</span></td>
+            <td>60</td><td>40</td><td><span class="badge bg-warning text-dark">Low Stock</span></td><td>15 Jul 2026</td>
+          </tr>
+          <tr>
+            <td>ITM-003</td><td>Cooking Oil</td><td>Fats &amp; Oils</td><td>ltr</td>
+            <td>0</td><td>8.2</td>
+            <td><span class="badge bg-danger">0 days</span></td>
+            <td>20</td><td>10</td><td><span class="badge bg-danger">Out of Stock</span></td><td>14 Jul 2026</td>
+          </tr>
+          <tr><td colspan="11" class="text-center text-muted py-2" style="font-size:0.8rem;"><i class="bi bi-info-circle me-1"></i>Days of Stock = Current Qty ÷ Avg Daily Consumption (7-day rolling avg)</td></tr>
+        </tbody>
       </table>
     </div>
   </div>

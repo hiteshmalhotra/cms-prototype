@@ -51,8 +51,21 @@
           <li><a href="/store/stock" th:class="${activeModule == 'store-stock'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Stock</span></a></li>
           <li><a href="/store/purchase-orders" th:class="${activeModule == 'store-po'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Purchase Orders</span></a></li>
           <li><a href="/store/challans" th:class="${activeModule == 'store-challans'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Transfer Challans</span></a></li>
-          <li><a href="/store/material-requests" th:class="${activeModule == 'store-mr'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Canteen Requests <span class="badge bg-warning text-dark ms-1" style="font-size:0.65rem;">NEW</span></span></a></li>
+          <li><a href="/store/day-book" th:class="${activeModule == 'store-daybook'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Day Book</span></a></li>
           <li><a href="/store/ledger" th:class="${activeModule == 'store-ledger'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Ledger</span></a></li>
+          <li><a href="/store/material-requests" th:class="${activeModule == 'store-mr'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Canteen Requests</span></a></li>
+          <li>
+            <a class="sidebar-link" data-bs-toggle="collapse" href="#navStoreProduction" role="button">
+              <span class="nav-label">Store Production <span class="badge bg-secondary ms-1" style="font-size:0.6rem;">PLANNED</span></span>
+              <i class="bi bi-chevron-right nav-arrow ms-auto"></i>
+            </a>
+            <div th:class="${activeModule == 'store-production'} ? 'collapse show' : 'collapse'" id="navStoreProduction">
+              <ul class="sidebar-submenu">
+                <li><a href="/store/production/bom" th:class="${activeModule == 'store-production'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">BOM Master</span></a></li>
+                <li><a href="/store/production/orders" th:class="${activeModule == 'store-production'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Production Orders</span></a></li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </div>
     </li>
@@ -89,7 +102,8 @@
           <li><a href="/canteen/consumption" th:class="${activeModule == 'canteen-consumption'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Consumption</span></a></li>
           <li><a href="/canteen/wastage" th:class="${activeModule == 'canteen-wastage'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Wastage</span></a></li>
           <li><a href="/canteen/daily-reports" th:class="${activeModule == 'canteen-reports'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Daily Reports</span></a></li>
-          <li><a href="/canteen/material-requests" th:class="${activeModule == 'canteen-mr'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Material Requests <span class="badge bg-primary ms-1" style="font-size:0.65rem;">↗ Store</span></span></a></li>
+          <li><a href="/canteen/material-requests" th:class="${activeModule == 'canteen-mr'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Material Requests</span></a></li>
+          <li><a href="/canteen/ledger" th:class="${activeModule == 'canteen-ledger'} ? 'sidebar-link active' : 'sidebar-link'"><span class="nav-label">Ledger</span></a></li>
         </ul>
       </div>
     </li>

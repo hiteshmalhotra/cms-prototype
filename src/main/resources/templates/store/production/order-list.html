@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Production Orders — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('store-production')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/store">Store</a></li>
+    <li class="breadcrumb-item active">Production Orders</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1><i class="bi bi-gear-wide-connected me-2"></i>Store Production Orders</h1>
+      <div class="page-subtitle">Track in-store production runs based on BOM <span class="badge bg-secondary ms-2">PLANNED</span></div>
+    </div>
+    <div class="page-header-actions">
+      <a href="/store/production/bom" class="btn btn-outline-secondary btn-sm"><i class="bi bi-diagram-3 me-1"></i>BOM Master</a>
+      <a href="/store/production/orders/create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>New Production Order</a>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="row g-3 mb-3">
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#E3F2FD;color:#1565C0;"><i class="bi bi-hourglass-split"></i></div><div class="stat-info"><div class="stat-value">2</div><div class="stat-label">In Progress</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#E8F5E9;color:#2E7D32;"><i class="bi bi-check-circle"></i></div><div class="stat-info"><div class="stat-value">8</div><div class="stat-label">Completed</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#FFF8E1;color:#F57F17;"><i class="bi bi-clock"></i></div><div class="stat-info"><div class="stat-value">1</div><div class="stat-label">Planned</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#FCE4D6;color:#A32020;"><i class="bi bi-x-circle"></i></div><div class="stat-info"><div class="stat-value">0</div><div class="stat-label">Cancelled</div></div></div></div>
+  </div>
+
+  <div class="cms-card">
+    <div class="filter-bar">
+      <div class="search-box"><i class="bi bi-search"></i><input type="text" class="form-control" placeholder="Search orders..."/></div>
+      <select class="form-select form-select-sm" style="width:auto;"><option>All Status</option><option>PLANNED</option><option>IN_PROGRESS</option><option>COMPLETED</option><option>CANCELLED</option></select>
+      <input type="date" class="form-control form-control-sm" style="width:160px;" value="2026-07-15"/>
+    </div>
+    <div class="cms-table-wrapper">
+      <table class="cms-table">
+        <thead><tr><th>Order No.</th><th>BOM</th><th>Product</th><th>Planned Qty</th><th>Actual Qty</th><th>Planned Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>SPROD-001</strong></td>
+            <td>BOM-001</td>
+            <td>Chapati Flour Mix</td>
+            <td>100 kg</td><td>100 kg</td>
+            <td>10 Jul 2026</td>
+            <td><span class="badge bg-success">COMPLETED</span></td>
+            <td><a href="/store/production/orders/SPROD-001" class="btn btn-sm btn-outline-primary">View</a></td>
+          </tr>
+          <tr>
+            <td><strong>SPROD-002</strong></td>
+            <td>BOM-002</td>
+            <td>Spice Blend (Standard)</td>
+            <td>20 kg</td><td>—</td>
+            <td>15 Jul 2026</td>
+            <td><span class="badge bg-primary">IN_PROGRESS</span></td>
+            <td><a href="/store/production/orders/SPROD-002" class="btn btn-sm btn-outline-primary">View</a></td>
+          </tr>
+          <tr>
+            <td><strong>SPROD-003</strong></td>
+            <td>BOM-001</td>
+            <td>Chapati Flour Mix</td>
+            <td>50 kg</td><td>—</td>
+            <td>18 Jul 2026</td>
+            <td><span class="badge bg-warning text-dark">PLANNED</span></td>
+            <td>
+              <a href="/store/production/orders/SPROD-003" class="btn btn-sm btn-outline-primary">View</a>
+              <a href="/store/production/orders/SPROD-003/start" class="btn btn-sm btn-outline-success">Start</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/store">Store</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

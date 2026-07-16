@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Canteen Ledger — CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" th:href="@{/css/cms-theme.css}"/></head>
+<body><div class="cms-shell">
+<aside class="cms-sidebar" th:replace="~{layout/main :: sidebar('canteen-ledger')}"></aside>
+<div class="cms-main">
+<header class="cms-topbar">
+  <button class="topbar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+  <nav class="topbar-breadcrumb"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="/canteen">Canteen</a></li>
+    <li class="breadcrumb-item active">Ledger</li>
+  </ol></nav>
+  <div class="topbar-actions"><button class="topbar-icon-btn" onclick="location='/notifications'"><i class="bi bi-bell"></i><span class="badge-dot"></span></button></div>
+</header>
+<main class="cms-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1><i class="bi bi-journal-bookmark me-2"></i>Canteen Stock Ledger</h1>
+      <div class="page-subtitle">Item-wise stock transaction history — receipts, consumption, wastage, and adjustments</div>
+    </div>
+    <div class="page-header-actions">
+      <button class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer me-1"></i>Print</button>
+      <button class="btn btn-outline-primary btn-sm"><i class="bi bi-download me-1"></i>Export</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="cms-card mb-3">
+    <div class="filter-bar">
+      <select class="form-select form-select-sm" style="width:auto;">
+        <option>All Items</option>
+        <option>Wheat Flour</option>
+        <option>Rice (Basmati)</option>
+        <option>Cooking Oil</option>
+      </select>
+      <select class="form-select form-select-sm" style="width:auto;">
+        <option>All Transaction Types</option>
+        <option>Material Request (IN)</option>
+        <option>Consumption (OUT)</option>
+        <option>Wastage (OUT)</option>
+        <option>Adjustment</option>
+      </select>
+      <div class="d-flex align-items-center gap-2">
+        <label class="form-label mb-0 text-muted small">From</label>
+        <input type="date" class="form-control form-control-sm" value="2026-07-01" style="width:145px;"/>
+        <label class="form-label mb-0 text-muted small">To</label>
+        <input type="date" class="form-control form-control-sm" value="2026-07-15" style="width:145px;"/>
+      </div>
+      <button class="btn btn-primary btn-sm"><i class="bi bi-funnel me-1"></i>Apply</button>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-3">
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#E8F5E9;color:#2E7D32;"><i class="bi bi-arrow-down-circle"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Total Receipts (IN)</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#FFF3E0;color:#E65100;"><i class="bi bi-arrow-up-circle"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Total Consumption (OUT)</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#FCE4D6;color:#A32020;"><i class="bi bi-trash"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Total Wastage</div></div></div></div>
+    <div class="col-sm-3"><div class="stat-card"><div class="stat-icon" style="background:#E3F2FD;color:#1565C0;"><i class="bi bi-boxes"></i></div><div class="stat-info"><div class="stat-value">—</div><div class="stat-label">Closing Balance</div></div></div></div>
+  </div>
+
+  <div class="cms-card">
+    <div class="cms-table-wrapper">
+      <table class="cms-table">
+        <thead>
+          <tr>
+            <th>Date &amp; Time</th>
+            <th>Transaction No.</th>
+            <th>Item</th>
+            <th>Unit</th>
+            <th>Type</th>
+            <th class="text-end">IN (+)</th>
+            <th class="text-end">OUT (−)</th>
+            <th class="text-end">Balance</th>
+            <th>Reference</th>
+            <th>Recorded By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>15 Jul 2026 09:15</td>
+            <td><strong>CLED-0041</strong></td>
+            <td>Wheat Flour</td><td>kg</td>
+            <td><span class="badge bg-success">Material Request</span></td>
+            <td class="text-end text-success">+60.0</td>
+            <td class="text-end">—</td>
+            <td class="text-end fw-semibold">210.0</td>
+            <td><a href="/store/material-requests/MR-012">MR-012</a></td>
+            <td>Canteen Mgr</td>
+          </tr>
+          <tr>
+            <td>15 Jul 2026 12:30</td>
+            <td><strong>CLED-0042</strong></td>
+            <td>Wheat Flour</td><td>kg</td>
+            <td><span class="badge bg-warning text-dark">Consumption</span></td>
+            <td class="text-end">—</td>
+            <td class="text-end text-warning">−18.5</td>
+            <td class="text-end fw-semibold">191.5</td>
+            <td><a href="/canteen/preparation-orders/PREP-055">PREP-055</a></td>
+            <td>Canteen Staff</td>
+          </tr>
+          <tr>
+            <td>15 Jul 2026 14:00</td>
+            <td><strong>CLED-0043</strong></td>
+            <td>Cooking Oil</td><td>ltr</td>
+            <td><span class="badge bg-danger">Wastage</span></td>
+            <td class="text-end">—</td>
+            <td class="text-end text-danger">−2.0</td>
+            <td class="text-end fw-semibold">6.2</td>
+            <td><a href="/canteen/wastage">WAS-008</a></td>
+            <td>Canteen Mgr</td>
+          </tr>
+          <tr>
+            <td>14 Jul 2026 10:00</td>
+            <td><strong>CLED-0040</strong></td>
+            <td>Rice (Basmati)</td><td>kg</td>
+            <td><span class="badge bg-success">Material Request</span></td>
+            <td class="text-end text-success">+25.0</td>
+            <td class="text-end">—</td>
+            <td class="text-end fw-semibold">80.0</td>
+            <td><a href="/store/material-requests/MR-011">MR-011</a></td>
+            <td>Canteen Mgr</td>
+          </tr>
+          <tr>
+            <td colspan="10" class="text-center text-muted py-3">
+              <button class="btn btn-outline-secondary btn-sm">Load More</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<footer class="cms-footer">&copy; 2026 CMS &nbsp;|&nbsp; <a href="/canteen">Canteen</a></footer>
+</div></div>
+<div class="cms-toast-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/cms-app.js}"></script>
+</body></html>

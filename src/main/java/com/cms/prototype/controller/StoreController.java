@@ -11,7 +11,7 @@ public class StoreController {
     @GetMapping
     public String dashboard(Model m) {
         m.addAttribute("pageTitle","Store Dashboard"); m.addAttribute("activeModule","store");
-        return "store/dashboard";
+        return "store/index";
     }
 
     // ── Items ──
@@ -75,4 +75,20 @@ public class StoreController {
     @PostMapping("/material-requests/{id}/reject") public String mrReject(@PathVariable String id) { return "redirect:/store/material-requests/" + id + "?rejected=true"; }
     @PostMapping("/material-requests/{id}/pack") public String mrPack(@PathVariable String id) { return "redirect:/store/material-requests/" + id + "?saved=true"; }
     @PostMapping("/material-requests/{id}/dispatch") public String mrDispatch(@PathVariable String id) { return "redirect:/store/material-requests/" + id + "?sent=true"; }
+
+    // ── Day Book ──
+    @GetMapping("/day-book") public String dayBook(Model m) { m.addAttribute("pageTitle","Day Book"); m.addAttribute("activeModule","store-daybook"); return "store/day-book"; }
+
+    // ── Store Production (PLANNED) ──
+    @GetMapping("/production") public String productionIndex(Model m) { m.addAttribute("pageTitle","Store Production"); m.addAttribute("activeModule","store-production"); return "redirect:/store/production/bom"; }
+    @GetMapping("/production/bom") public String bomList(Model m) { m.addAttribute("pageTitle","BOM Master"); m.addAttribute("activeModule","store-production"); return "store/production/bom-list"; }
+    @GetMapping("/production/bom/create") public String bomCreate(Model m) { m.addAttribute("pageTitle","Create BOM"); m.addAttribute("activeModule","store-production"); return "store/production/bom-create"; }
+    @PostMapping("/production/bom/create") public String bomDoCreate() { return "redirect:/store/production/bom?saved=true"; }
+    @GetMapping("/production/bom/{id}") public String bomView(@PathVariable String id, Model m) { m.addAttribute("pageTitle","BOM Details"); m.addAttribute("activeModule","store-production"); return "store/production/bom-view"; }
+    @GetMapping("/production/orders") public String prodOrderList(Model m) { m.addAttribute("pageTitle","Production Orders"); m.addAttribute("activeModule","store-production"); return "store/production/order-list"; }
+    @GetMapping("/production/orders/create") public String prodOrderCreate(Model m) { m.addAttribute("pageTitle","Create Production Order"); m.addAttribute("activeModule","store-production"); return "store/production/order-create"; }
+    @PostMapping("/production/orders/create") public String prodOrderDoCreate() { return "redirect:/store/production/orders?saved=true"; }
+    @GetMapping("/production/orders/{id}") public String prodOrderView(@PathVariable String id, Model m) { m.addAttribute("pageTitle","Production Order Details"); m.addAttribute("activeModule","store-production"); return "store/production/order-view"; }
+    @GetMapping("/production/orders/{id}/start") public String prodOrderStart(@PathVariable String id) { return "redirect:/store/production/orders/" + id + "?saved=true"; }
+    @GetMapping("/production/orders/{id}/complete") public String prodOrderComplete(@PathVariable String id) { return "redirect:/store/production/orders/" + id + "?saved=true"; }
 }
