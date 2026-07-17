@@ -63,7 +63,7 @@
       </div>`;
     container.appendChild(toast);
 
-    const bsToast = new bootstrap.Toast(toast, { delay: 3500 });
+    const bsToast = new bootstrap.Toast(toast, { delay: 5000 });
     bsToast.show();
     toast.addEventListener('hidden.bs.toast', () => toast.remove());
   };
